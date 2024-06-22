@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhjugvf8tskhh"]
+
+[ext_resource type="PackedScene" uid="uid://cmeh4fpdt85hb" path="res://myFirstGame/Player/Player.tscn" id="1_irsuq"]
+[ext_resource type="Texture2D" uid="uid://1oiedc44kjmp" path="res://Art/Textures/tileset.png" id="2_eyytm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6al27"]
+atlas = ExtResource("2_eyytm")
+region = Rect2(16, 64, 64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmen7"]
+size = Vector2(64, 32)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_irsuq")]
+position = Vector2(527, 222)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(533, 459)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = SubResource("AtlasTexture_6al27")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_gmen7")

@@ -1,0 +1,117 @@
+[gd_scene load_steps=23 format=3 uid="uid://cmeh4fpdt85hb"]
+
+[ext_resource type="Texture2D" uid="uid://rg3lbtjpl4pc" path="res://myFirstGame/Player/Sprites/Player-jump/player-jump2.png" id="1_7tsqb"]
+[ext_resource type="Script" path="res://myFirstGame/Player/Scripts/Player.gd" id="1_hqkwr"]
+[ext_resource type="Texture2D" uid="uid://dh3coufswajy8" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle1.png" id="2_qwpt0"]
+[ext_resource type="Texture2D" uid="uid://c4col3cm6oix7" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle2.png" id="3_g7886"]
+[ext_resource type="Texture2D" uid="uid://cckgtatv0x433" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle3.png" id="4_3t0gp"]
+[ext_resource type="Texture2D" uid="uid://bvnh3a87ph5yy" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle4.png" id="5_fje0t"]
+[ext_resource type="Texture2D" uid="uid://dxxglnyjicv67" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle5.png" id="6_0ayiv"]
+[ext_resource type="Texture2D" uid="uid://chw3rw5ulhvdm" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle6.png" id="7_rjjsr"]
+[ext_resource type="Texture2D" uid="uid://dh0egivuuht84" path="res://myFirstGame/Player/Sprites/Player-jump/player-jump1.png" id="8_45a4h"]
+[ext_resource type="Texture2D" uid="uid://c22p2x3bt2geo" path="res://myFirstGame/Player/Sprites/player-run/player-run1.png" id="9_dy3r4"]
+[ext_resource type="Texture2D" uid="uid://c24sxiopcdksu" path="res://myFirstGame/Player/Sprites/player-run/player-run2.png" id="10_1qdr3"]
+[ext_resource type="Texture2D" uid="uid://doyld805e2j5r" path="res://myFirstGame/Player/Sprites/player-run/player-run3.png" id="11_san5e"]
+[ext_resource type="Texture2D" uid="uid://dngyxrydeaq80" path="res://myFirstGame/Player/Sprites/player-run/player-run4.png" id="12_mdyb8"]
+[ext_resource type="Texture2D" uid="uid://6twm0s0jgxmg" path="res://myFirstGame/Player/Sprites/player-run/player-run5.png" id="13_ffmw8"]
+[ext_resource type="Texture2D" uid="uid://c51bxx6k4isv8" path="res://myFirstGame/Player/Sprites/player-run/player-run6.png" id="14_61hxi"]
+[ext_resource type="Script" path="res://Code/Scripts/PlayerStateMachine.gd" id="16_xy4y8"]
+[ext_resource type="Script" path="res://myFirstGame/Player/IdlePlayerState.gd" id="17_kcyg5"]
+[ext_resource type="Script" path="res://myFirstGame/Player/RunningPlayerState.gd" id="18_nlnaa"]
+[ext_resource type="Script" path="res://myFirstGame/Player/JumpPlayerState.gd" id="19_gc4pa"]
+[ext_resource type="Script" path="res://myFirstGame/Player/FallPlayerState.gd" id="20_oa1av"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uw7do"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7tsqb")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qwpt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g7886")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3t0gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fje0t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0ayiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rjjsr")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_45a4h")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_dy3r4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1qdr3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_san5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mdyb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ffmw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_61hxi")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vm8op"]
+size = Vector2(14, 29)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_hqkwr")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_uw7do")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4.5)
+shape = SubResource("RectangleShape2D_vm8op")
+
+[node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("16_xy4y8")
+current_state = NodePath("IdlePlayerState")
+
+[node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("17_kcyg5")
+
+[node name="RunningPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("18_nlnaa")
+
+[node name="JumpingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("19_gc4pa")
+
+[node name="FallPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("20_oa1av")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://hfs6otfsbghv"]
+
+[ext_resource type="Texture2D" uid="uid://1oiedc44kjmp" path="res://Art/Textures/tileset.png" id="1_vcn58"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_177us"]
+atlas = ExtResource("1_vcn58")
+region = Rect2(201, 32, 151, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsefi"]
+size = Vector2(150, 144.724)
+
+[node name="Pillars" type="StaticBody2D"]
+scale = Vector2(1, 0.967361)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_177us")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tsefi")
