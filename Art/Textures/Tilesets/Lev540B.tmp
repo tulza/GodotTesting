@@ -95,4 +95,7 @@ position = Vector2(722, 285)
 position = Vector2(664, 405)
 
 [node name="Eye" parent="." instance=ExtResource("10_xlltw")]
-position = Vector2(566, 268)
+position = Vector2(558, 266)
+
+[node name="Eye2" parent="." instance=ExtResource("10_xlltw")]
+position = Vector2(803, 242)

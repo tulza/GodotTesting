@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwxxh7v1tko84"]
+
+[ext_resource type="Script" path="res://JumpboostItem.gd" id="1_8cm8r"]
+[ext_resource type="Texture2D" uid="uid://bdkvg346vny0s" path="res://Art/Textures/Props/battery1.png" id="2_0k1x8"]
+[ext_resource type="Texture2D" uid="uid://bd88asje1q0rd" path="res://Art/Textures/Props/battery2.png" id="3_5r7gd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_03lm3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0k1x8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5r7gd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iiscr"]
+radius = 6.0
+height = 22.0
+
+[sub_resource type="Gradient" id="Gradient_os57t"]
+offsets = PackedFloat32Array(0, 0.776515)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6tubc"]
+gradient = SubResource("Gradient_os57t")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="HealthItem" type="Area2D"]
+script = ExtResource("1_8cm8r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_03lm3")
+autoplay = "default"
+frame_progress = 0.552631
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_iiscr")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_6tubc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

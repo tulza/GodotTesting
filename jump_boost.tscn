@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://oaasb2mwiov1"]
+
+[ext_resource type="Script" path="res://jump_boost.gd" id="1_cd5a0"]
+[ext_resource type="Texture2D" uid="uid://b4kukvv42l1id" path="res://myFirstGame/Player/Sprites/Pick Feedback 2/pick-feedback-2.png" id="2_dyokq"]
+[ext_resource type="Texture2D" uid="uid://b8hetajn2eb4w" path="res://myFirstGame/Player/Sprites/Pick Feedback 2/pick-feedback-3.png" id="3_5d851"]
+[ext_resource type="Texture2D" uid="uid://bulxqrgkn4l62" path="res://myFirstGame/Player/Sprites/Pick Feedback 2/pick-feedback-4.png" id="4_sanyt"]
+[ext_resource type="Texture2D" uid="uid://bum7ceef0fly5" path="res://myFirstGame/Player/Sprites/Pick Feedback 2/pick-feedback-5.png" id="5_4hiaf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qmpw2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dyokq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5d851")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sanyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4hiaf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fs24m"]
+radius = 10.0499
+
+[sub_resource type="Gradient" id="Gradient_fg2aj"]
+offsets = PackedFloat32Array(0, 0.727273)
+colors = PackedColorArray(0.893939, 0.893939, 0.893939, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q3gd1"]
+gradient = SubResource("Gradient_fg2aj")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="JumpBoost" type="Area2D"]
+script = ExtResource("1_cd5a0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qmpw2")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fs24m")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_q3gd1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -28,7 +28,7 @@ func _physics_process(_delta: float) -> void:
 	
 func on_child_transition(new_state_name: StringName) -> void:
 	var new_state = states.get(new_state_name)
-	print(new_state)
+	#print(new_state)
 	if new_state != null:
 		if new_state != current_state:
 			current_state.exit()

@@ -1,10 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://cmeh4fpdt85hb"]
+[gd_scene load_steps=27 format=3 uid="uid://cmeh4fpdt85hb"]
 
 [ext_resource type="Texture2D" uid="uid://rg3lbtjpl4pc" path="res://myFirstGame/Player/Sprites/Player-jump/player-jump2.png" id="1_7tsqb"]
 [ext_resource type="Script" path="res://myFirstGame/Player/Scripts/Player.gd" id="1_hqkwr"]
+[ext_resource type="PackedScene" uid="uid://cidbkslltytpb" path="res://UserInterface.tscn" id="2_p5mdj"]
 [ext_resource type="Texture2D" uid="uid://dh3coufswajy8" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle1.png" id="2_qwpt0"]
 [ext_resource type="Texture2D" uid="uid://c4col3cm6oix7" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle2.png" id="3_g7886"]
+[ext_resource type="Texture2D" uid="uid://buuarc1vggh8b" path="res://myFirstGame/Player/Sprites/Player-Hurt/player-hurt1.png" id="3_k0o4d"]
 [ext_resource type="Texture2D" uid="uid://cckgtatv0x433" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle3.png" id="4_3t0gp"]
+[ext_resource type="Texture2D" uid="uid://b4y3smgbhw6wb" path="res://myFirstGame/Player/Sprites/Player-Hurt/player-hurt2.png" id="4_d5ost"]
 [ext_resource type="Texture2D" uid="uid://bvnh3a87ph5yy" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle4.png" id="5_fje0t"]
 [ext_resource type="Texture2D" uid="uid://dxxglnyjicv67" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle5.png" id="6_0ayiv"]
 [ext_resource type="Texture2D" uid="uid://chw3rw5ulhvdm" path="res://myFirstGame/Player/Sprites/Player-idle/player-idle6.png" id="7_rjjsr"]
@@ -20,9 +23,21 @@
 [ext_resource type="Script" path="res://myFirstGame/Player/RunningPlayerState.gd" id="18_nlnaa"]
 [ext_resource type="Script" path="res://myFirstGame/Player/JumpPlayerState.gd" id="19_gc4pa"]
 [ext_resource type="Script" path="res://myFirstGame/Player/FallPlayerState.gd" id="20_oa1av"]
+[ext_resource type="Script" path="res://myFirstGame/Player/DamagePlayerState.gd" id="22_nbf8t"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uw7do"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_k0o4d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_d5ost")
+}],
+"loop": true,
+"name": &"Damage",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_7tsqb")
@@ -92,9 +107,12 @@ size = Vector2(14, 29)
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_hqkwr")
 
+[node name="CanvasLayer" parent="." instance=ExtResource("2_p5mdj")]
+visible = true
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uw7do")
-animation = &"Run"
+animation = &"Damage"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 4.5)
@@ -115,3 +133,6 @@ script = ExtResource("19_gc4pa")
 
 [node name="FallPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("20_oa1av")
+
+[node name="DamagePlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("22_nbf8t")

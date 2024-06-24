@@ -22,6 +22,9 @@ func update(_delta: float) -> void:
 			transition.emit("IdlePlayerState")
 		else:
 			transition.emit("RunningPlayerState")
+			
+	if player.taking_damage == true:
+		transition.emit("DamagePlayerState")
 	
 func physics_update(_delta: float) -> void: 
 	pass

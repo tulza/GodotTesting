@@ -1,0 +1,100 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3rwwmycehmc3"]
+
+[ext_resource type="Script" path="res://eye.gd" id="1_uoscy"]
+[ext_resource type="Texture2D" uid="uid://cuccc12obsg1r" path="res://myFirstGame/Enemy/fly-eye/fly-eye1.png" id="1_y1ism"]
+[ext_resource type="Texture2D" uid="uid://dmqu3fi4irrst" path="res://myFirstGame/Enemy/fly-eye/fly-eye2.png" id="2_u0y7t"]
+[ext_resource type="Texture2D" uid="uid://sd650grmkx0i" path="res://myFirstGame/Enemy/fly-eye/fly-eye3.png" id="3_tvckr"]
+[ext_resource type="Texture2D" uid="uid://bmr5j0sseokuj" path="res://myFirstGame/Enemy/fly-eye/fly-eye4.png" id="4_4lfn7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_55kfv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_y1ism")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u0y7t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tvckr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4lfn7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_78wmf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2td6u"]
+
+[sub_resource type="Animation" id="Animation_422kk"]
+resource_name = "fly"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 150), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gt83d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mfl3b"]
+_data = {
+"RESET": SubResource("Animation_gt83d"),
+"fly": SubResource("Animation_422kk")
+}
+
+[node name="Eye" type="Node2D"]
+script = ExtResource("1_uoscy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_55kfv")
+autoplay = "default"
+
+[node name="Hitbox" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Hitbox"]
+scale = Vector2(1.55206, 1.55206)
+shape = SubResource("CircleShape2D_78wmf")
+
+[node name="Vision" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Vision"]
+scale = Vector2(9.59546, 9.59546)
+shape = SubResource("CircleShape2D_2td6u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mfl3b")
+}
+autoplay = "fly"
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="AnimatedSprite2D/Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="AnimatedSprite2D/Vision" to="." method="_on_vision_body_entered"]
+[connection signal="body_exited" from="AnimatedSprite2D/Vision" to="." method="_on_vision_body_exited"]

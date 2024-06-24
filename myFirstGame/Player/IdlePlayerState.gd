@@ -24,5 +24,8 @@ func update(delta: float) -> void:
 	if player.velocity.y > 1.0:
 		transition.emit("FallPlayerState")
 		
+	if player.taking_damage == true:
+		transition.emit("DamagePlayerState")
+		
 func _process(_delta: float) -> void:
 	pass
